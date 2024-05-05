@@ -1,0 +1,1023 @@
+\chapter{Application aux données}
+    %\addcontentsline{toc}{chapter}{}
+\markboth{CHAPITRE 3. Application aux données}{
+
+Nous allons à présent appliquer notre méthode de détection de point de rupture présentée au chapitre précédent à nos données.\\
+
+Nous rappelons que dans notre rapport, nous traitons seulement les régions pour lesquelles nous disposons de plus de 70 observations (les autres régions sont traitées dans le code joint au rapport) et que notre modèle sera appliqué aux séries temporelles correspondant aux nombre de trains programmés et au nombre de trains annulés pour les régions sélectionnées (\textit{cf Figure 3.1}).
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Tableau_2.png}
+  \caption{Régions selectionnées}
+\end{figure}
+
+\section{Bretagne}
+
+Nous examinons la performance du réseau ferroviaire dans la région de Bretagne, en nous concentrant sur les données opérationnelles recueillies sur une période s'étendant de 2013 à 2023. Les indicateurs clés comprennent le nombre de trains programmés, ceux ayant réellement circulé, ainsi que les incidents tels que les annulations et les retards à l'arrivée.
+
+Dans cette partie, nous avons entrepris une étude approfondie des données sur le nombre de trains programmés en Bretagne, s'étendant de 2013 à 2023. L'analyse suivante présente une visualisation de ces données, révélant les tendances sous-jacentes et les potentiels points de rupture qui ont marqué la période observée.
+
+\subsection{Trains programmés}
+
+Dans cette partie, nous nous concentrons sur la visualisation du nombre de trains programmés. Cette visualisation nous aide non seulement à comprendre les tendances générales et les variations saisonnières, mais elle est également cruciale pour détecter les anomalies et les points de rupture qui pourraient indiquer des changements majeurs dans la planification des transports ou refléter des réponses à des événements externes.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/BR-FIG1.png} 
+\caption{Bretagne : Nombre de trains programmés de 2013 à 2024.}
+\label{fig:trains_programmes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/BR-FIG2.png} 
+\caption{Bretagne : Régions selectionnées.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2017-08}. 
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/BR-FIG4.png} 
+\caption{Bretagne : La date de repture.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 4.314571e-11}: nous rejettons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=( 8627.61, 9957.25, 850.73, 2140.80, -6.96)\\
+ 
+ 
+
+Nous constatons que la moyenne des trains programmés avant le point de rupture ($\hat{\mu_1}^k$) est inférieure à celle après le point de rupture ($\hat{\mu_2}^k$). Cela indique une augmentation du nombre moyen de trains programmés post-rupture. De plus, nous observons une augmentation significative de la variance après le point de rupture ($\hat{\sigma_2}^k$ par rapport à $\hat{\sigma_1}^k$), ce qui suggère une plus grande dispersion dans le nombre de trains programmés. Ces observations sont en accord avec la visualisation présentée à la Figure 3.4.\\ 
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.5 et 3.6})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FIG5.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FIG6.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ négatif, indiquant des lois normales asymétriques inclinées vers la droite, ce qui signifie une queue de distribution plus longue du côté gauche. Cette caractéristique semble concorder avec les histogrammes présentés, où l'on observe une concentration plus importante des valeurs à gauche de la moyenne.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FIG07.png}
+  \caption{Nombre de trains annulés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FOG08.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2019-09}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/BR-FIG10.png} 
+\caption{Bretagne : Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/BR-FIG09.png} 
+\caption{Bretagne : La date de repture.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value=  0.01}: nous rejettons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=( 35.10, 26.35, 66.08,  113.60, 7.86)\\
+
+Nous constatons que la moyenne du nombre de trains annulés avant le point de rupture ($\hat{\mu_1}^k$) est supérieure à celle après le point de rupture ($\hat{\mu_2}^k$), ce qui indique une réduction du nombre moyen de trains annulés post-rupture. De plus, l'augmentation significative de la variance après le point de rupture ($\hat{\sigma_2}^k$ comparée à $\hat{\sigma_1}^k$) suggère une plus grande dispersion dans le nombre de trains annulés. Ces observations sont cohérentes avec les tendances visualisées dans la Figure 3.10.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.5 et 3.6})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FIG11.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/BR-FIG12.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ positif, ce qui suggère des lois normales asymétriques avec une queue de distribution plus étendue vers la droite. Cette caractéristique est cohérente avec les histogrammes présentés pour l'échantillon avant et après le point de rupture. En effet, les histogrammes indiquent une asymétrie où la queue droite de la distribution s'étend au-delà de la moyenne plus que la queue gauche, conformément à une asymétrie positive.
+
+
+\section{Pays-de-la-Loire}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/PL-FIG01.png} 
+\caption{Nombre de trains programmés de 2013 à 2024.}
+\label{fig:trains_programmes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/PL-FIG02.png} 
+\caption{Régions selectionnées.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2017-05}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{image/PL-FIG03.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Loire_rupt.png} 
+\caption{La date de repture.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 1.42e-20}: nous rejectons $H_0$.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=( 11737.96, 14503.91, 1459.96, 3231.32,-7.89)\\
+ 
+Nous observons que la moyenne du nombre de trains programmés dans les Pays de la Loire avant le point de rupture ($\hat{\mu_1}^k$) est moins élevée que celle après le point de rupture ($\hat{\mu_2}^k$), révélant une augmentation notable du nombre moyen de trains programmés après la rupture. Parallèlement, la variance après le point de rupture ($\hat{\sigma_2}^k$) dépasse significativement celle d'avant la rupture ($\hat{\sigma_1}^k$), ce qui indique une plus grande hétérogénéité dans la programmation des trains suite à cette date. 
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.17 et 3.18})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG04.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG05.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ négatif, suggérant des distributions normales asymétriques inclinées vers la droite, impliquant ainsi une queue de distribution plus longue du côté gauche. Cette asymétrie est validée par les histogrammes présentés, où l'on constate une concentration accrue des valeurs à droite de la moyenne, spécialement dans les données après le point de rupture. Cette tendance indique que dans les Pays de la Loire, les trains programmés tendent à présenter une distribution avec une incidence plus marquée de valeurs extrêmement élevées suite au point de rupture, comme le montrent les Figures 3.17 et 3.18.
+
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG06.png}
+  \caption{Nombre de trains annulés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG07.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2019-09}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/PL-FIG08.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/PL-FIG09.png} 
+\caption{La date de repture.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 0.17 }: nous ne pouvons pas rejeter $H_0$. Le point de rupture ne semble pas pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=( 92.92,  68.23, 125.48, 239.38, 6.28)\\
+
+Nous constatons que la moyenne du nombre de trains annulés dans les Pays de la Loire avant le point de rupture ($\hat{\mu_1}^k$) est plus élevée que celle après le point de rupture ($\hat{\mu_2}^k$), révélant ainsi une diminution du nombre moyen de trains annulés suite à la rupture. En outre, l'augmentation de la variance post-rupture ($\hat{\sigma_2}^k$ par rapport à $\hat{\sigma_1}^k$) indique une variabilité plus importante dans le nombre de trains annulés après le point de rupture. Le paramètre de skewness positif ($\hat{\theta}^k$) suggère une distribution asymétrique avec une queue plus prononcée vers la droite. Cette distribution est visuellement corroborée par la Figure 3.22, qui montre un changement significatif dans la distribution des annulations de trains à la date indiquée par le trait rouge en pointillé.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.23 et 3.24})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG10.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/PL-FIG11.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ positif, indiquant des distributions normales asymétriques avec une queue plus longue s'étendant vers la droite. Cette caractéristique se vérifie dans les histogrammes pour l'échantillon avant et après le point de rupture, où l'on constate une concentration des valeurs dépassant la moyenne sur le côté droit de la distribution. 
+
+\section{Centre}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/Cn-FIG1.png} 
+\caption{Nombre de trains programmés de 2013 à 2024.}
+\label{fig:trains_programmes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/Cn-FIG02.png} 
+\caption{Régions selectionnées.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2017-10}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{image/Cn-FIG03.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{Cn-FIG04.png} 
+\caption{La date de repture.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value=  4.651e-08}: nous rejectons $H_0$.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(9.68897541e+03  1.13077069e+04  9.30181789e+02  2.86048081e+03
+ -4.93819171e+00)\\
+ 
+Nous observons que la moyenne du nombre de trains programmés dans la région Centre avant le point de rupture ($\hat{\mu_1}^k$) est inférieure à celle après le point de rupture ($\hat{\mu_2}^k$), suggérant une augmentation significative du nombre moyen de trains programmés post-rupture. De même, la variance post-rupture ($\hat{\sigma_2}^k$) est nettement plus élevée que la variance pré-rupture ($\hat{\sigma_1}^k$), indiquant une diversité accrue dans le nombre de trains programmés après cette date. Le skewness négatif ($\hat{\theta}^k$) reflète une asymétrie de la distribution, avec une tendance à des valeurs extrêmement basses plus fréquentes. Ces observations sont cohérentes avec le changement marqué illustré dans la Figure 3.28, où la ligne rouge en pointillé indique le moment de la rupture.
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.29 et 3.30})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG05.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG06.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ négatif, ce qui indique des distributions normales asymétriques inclinées vers la gauche, résultant en une queue de distribution allongée du côté droit. Cette asymétrie se vérifie dans les histogrammes, où nous observons une augmentation des valeurs supérieures à la moyenne, en particulier après le point de rupture. Cette observation suggère que dans la région Centre, la distribution des trains programmés post-rupture est marquée par une fréquence accrue de valeurs élevées, comme l'illustrent les Figures 3.29 et 3.30.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG07.png}
+  \caption{Nombre de trains annulés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG08.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2014-06}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/Cn-FIG09.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/Cn-FIG10.png} 
+\caption{La date de repture.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 0.17 }: nous ne pouvons pas rejeter $H_0$. Le point de rupture ne semble pas pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(  9.66, 66.37, 343.50, 114.80, 5.30)\\
+
+Nous observons que la moyenne du nombre de trains annulés dans la région Centre avant le point de rupture ($\hat{\mu_1}^k$) est inférieure à celle observée après le point de rupture ($\hat{\mu_2}^k$), suggérant une augmentation du nombre moyen de trains annulés suite à la rupture. De plus, l'accroissement de la variance après le point de rupture ($\hat{\sigma_2}^k$ comparativement à $\hat{\sigma_1}^k$) indique une plus grande dispersion dans le nombre de trains annulés post-rupture. Le paramètre de skewness positif ($\hat{\theta}^k$) révèle une asymétrie de la distribution, avec une queue s'étendant davantage vers la droite. Cette asymétrie est confirmée visuellement par la Figure 3.34, où le changement notable dans la distribution des annulations de trains est mis en évidence par la ligne rouge en pointillé indiquant le moment de la rupture.
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.35 et 3.36})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG11.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/Cn-FIG12.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ positif, indiquant des distributions normales asymétriques avec une queue de distribution s’étendant plus longuement vers la droite. Cette caractéristique est confirmée par les histogrammes de la région Centre, tant pour l'échantillon avant qu'après le point de rupture. Les données montrent une prédominance des valeurs excédant la moyenne du côté droit, ce qui est caractéristique d'une skewness positive. Cette asymétrie dans la distribution du nombre de trains annulés est illustrée visuellement par les Figures 3.35 et 3.36, soulignant la présence d'une distribution inclinée post-rupture dans la région étudiée.
+
+
+\section{Aquitaine}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/AQ-FIG1.png} 
+\caption{Nombre de trains programmés de 2013 à 2024.}
+\label{fig:trains_programmes}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/AQ-FIG2.png} 
+\caption{Régions selectionnées.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2017-11}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{image/AQ-FIG3.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/AQ-FIG4.png} 
+\caption{La date de repture.}
+\label{fig:trains_programmes_2}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value=  1.5789521915581405e-15}: nous rejectons $H_0$.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(9.79476421e+03  1.80417857e+04  1.43618833e+03  5.57450614e+03
+ -1.31829067e+01)\\
+ 
+
+Pour votre figure de la région Aquitaine et les valeurs des paramètres statistiques données, voici le paragraphe corrigé :
+
+Nous observons que la moyenne du nombre de trains programmés dans la région Aquitaine avant le point de rupture ($\hat{\mu_1}^k$) est considérablement inférieure à celle qui est relevée après le point de rupture ($\hat{\mu_2}^k$), indiquant ainsi une augmentation marquée du nombre moyen de trains programmés post-rupture. En outre, nous notons que la variance après le point de rupture ($\hat{\sigma_2}^k$) surpasse largement celle d'avant la rupture ($\hat{\sigma_1}^k$), ce qui signale une variabilité beaucoup plus grande dans la fréquence des trains programmés suite à cette date. Le skewness négatif très prononcé ($\hat{\theta}^k$) suggère une asymétrie de la distribution, avec une prédominance de valeurs extrêmement basses. Ces observations sont illustrées par la Figure 3.40, où la ligne rouge en pointillé marque le point de rupture significatif dans la distribution du nombre de trains programmés.
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.29 et 3.30})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG5.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG6.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ négatif, indiquant des distributions normales asymétriques inclinées vers la gauche, ce qui se traduit par une queue de distribution prolongée du côté droit. Cette asymétrie est confirmée par les histogrammes de la région Aquitaine, qui montrent un nombre accru de valeurs excédant la moyenne, surtout après le point de rupture. Cela indique que la distribution des trains programmés dans la région Aquitaine après le point de rupture tend vers une fréquence plus élevée de valeurs supérieures, comme démontré par les Figures 3.41 et 3.42, illustrant le changement dans la distribution post-rupture.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG7.png}
+  \caption{Nombre de trains annulés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG8.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2019-10}. 
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/AQ-FIG9.png} 
+\caption{Recherche du moment de rupture optimal.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{image/AQ-FIG10.png} 
+\caption{La date de repture.}
+\label{fig:trains_ANNULES_2}
+\end{figure}
+
+
+
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 0.03042677774966097 }: nous rejetons $H_0$.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=( 98.60025567  39.88619881 155.60519799 515.51660342   4.87537057)\\
+
+Nous observons que la moyenne du nombre de trains annulés dans la région Aquitaine avant le point de rupture ($\hat{\mu_1}^k$) est supérieure à celle observée après le point de rupture ($\hat{\mu_2}^k$), révélant ainsi une diminution du nombre moyen de trains annulés post-rupture. Par ailleurs, l'augmentation considérable de la variance après le point de rupture ($\hat{\sigma_2}^k$ en comparaison à $\hat{\sigma_1}^k$) indique une variabilité plus importante dans le nombre de trains annulés après cette date. Le paramètre de skewness positif ($\hat{\theta}^k$) suggère une asymétrie dans la distribution, avec une queue s'étendant plus significativement vers la droite. Cette asymétrie est illustrée par la Figure 3.46, où le trait rouge en pointillé marque un changement significatif dans la distribution des annulations de trains à l'instant de la rupture.
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.35 et 3.36})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG11.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/AQ-FIG12.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avons obtenu un paramètre $\hat{\theta}^k$ positif, ce qui indique des distributions normales asymétriques avec une queue plus étendue vers la droite pour la région Aquitaine. Cette caractéristique est clairement observée dans les histogrammes, tant pour l'échantillon avant qu'après le point de rupture. Les histogrammes révèlent une prévalence de valeurs excédant la moyenne sur le côté droit de la distribution, cohérente avec une skewness positive. Cette asymétrie dans la distribution du nombre de trains annulés est confirmée visuellement par les Figures 3.47 et 3.48, mettant en évidence une distribution qui penche davantage vers des valeurs supérieures après le point de rupture.
+
+
+
+\section{Provence Alpes Côte d'Azur}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TP_1.png}
+  \caption{Nombre de trains programmés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TP_2.png}
+  \caption{Histogramme du nombre de trains programmés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2018-02}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{PACA_TP_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 2.30e-06}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(15925.16, 15384.91,  2025.92,  3341.31, -4657.06)\\
+
+Nous constatons que la moyenne de la loi normale asymétrique avant point de rupture est légèrement plus élevée que pour celle après point de rupture. Mais surtout, nous observons une augmentation significante de la variance apès point de rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.51}.\\
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.52 et 3.53})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TP_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TP_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ négatif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la droite, avec une queue de distribution plus importante sur la gauche. Cela parait cohérent avec les histogrammes obtenus.\\
+En revanche, la correspondance entre droite théorique et histogramme est un peu décevante, en particulier pour la Figure 3.9.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_1.png}
+  \caption{Nombre de trains annulés entre 01/2013 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_2.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2014-02}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_3_bis.png}
+  \caption{Recherche du moment de rupture optimal}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 9.50e-05}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(285.35, 238.41, 1052.41, 294.60, 3.03)\\
+
+Comme précédemment la moyenne de la loi normale asymétrique avant point de rupture est légèrement plus élevée que celle après point de rupture. Le changement le plus important concerne les variances: la variance de la loi normale assymétrique avant rupture est bien plus élevée comparée à la varaince de la loi normale assymétrique après rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.57}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.58 et 3.59})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{PACA_TA_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ positif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la gauche, avec une queue de distribution plus importante sur la droite. Cela parait cohérent avec les histogrammes obtenus. Puisque $\hat{\theta}^k$ est petit en valeur absolue, cela signifie que l'assymétrie est légère. C'est cohérent avec l'histogramme de l'échantillon après rupture mais pas très cohérent avec l'histogramme de l'échantillon avant rupture pour lequel l'assymétrie semble beaucoup plus prononcée. Dans ce cas, un modèle de rupture pour lequel les deux lois normales assymétriques ont chacune un paramètre ${\theta}$ différent aurait pu être plus adapté. \\
+
+La correspondance entre droite théorique et histogramme est un peu décevante pour le figure avant rupture (\textit{cf Figure 3.58}). En revanche elle est satisfaisante pour la figure après rupture (\textit{cf Figure 3.59}).
+
+
+\section{Normandie}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TP_1.png}
+  \caption{Nombre de trains programmés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TP_2.png}
+  \caption{Histogramme du nombre de trains programmés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2019-11}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{Nor_TP_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 9.50e-05}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(9076.73,11520.44,1373.40 ,2933.11,-5965.37)\\
+
+Nous constatons une moyenne plus élevée pour la loi normale assymétrique après le point de rupture comparé à celle avant le point de rupture. Nous constatons aussi une augmentation importante de la variance après le point de rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.62}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.63 et 3.64})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TP_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TP_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ négatif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la droite, avec une queue de distribution plus importante sur la gauche. Puisque $\hat{\theta}^k$ est grand en valeur absolue, cela signifie que l'assymétrie est importante. Cela parait cohérent avec les histogrammes obtenus.\\
+En revanche, la correspondance entre droite théorique et histogramme est décevante.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_1.png}
+  \caption{Nombre de trains annulés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_2.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2019-09}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_3_bis.png}
+  \caption{Recherche du moment de rupture optimal}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 0.007}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(62.36,  52.55, 71.21, 170.25, 6.13)\\
+
+La moyenne de la loi normale asymétrique avant point de rupture est plus élevée que celle après point de rupture. Le changement le plus important concerne les variances: la variance de la loi normale assymétrique après rupture est bien plus élevée que la variance de la loi normale assymétrique avant point rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.68}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.69 et 3.70})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{Nor_TA_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ positif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la gauche, avec une queue de distribution plus importante sur la droite. Puisque $\hat{\theta}^k$ est petit en valeur absolue, cela signifie que l'assymétrie est légère. Cela parait cohérent avec les histogrammes obtenus.
+
+La correspondance entre droite théorique et histogramme est satisfaisante pour les deux échantillons.
+
+\section{Hauts-de-France}
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TP_1.png}
+  \caption{Nombre de trains programmés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TP_2.png}
+  \caption{Histogramme du nombre de trains programmés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2021-08}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{HF_TP_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 0.04}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.\\
+
+\\Cependant, nous remarquons que notre p-value est plutôt élevée comparé à ce que nous avions pû obtenir précédemment. Avec un niveau de confiance plus important (par exemple $\alpha$=0,01) nous n'aurions pas assez de preuve pour rejeter $H_0$
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(30788.67, 31398.90, 8249.20, 4146.03, -6679.83)\\
+
+Nous constatons une hausse légère de la moyenne après le point de rupture. Mais de manière plus significative, nous observons que la variance de la loi avant point de rupture est le double de celle de la loi après point de rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.73}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.74 et 3.75})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TP_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TP_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ négatif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la droite, avec une queue de distribution plus importante sur la gauche. Cela parait cohérent avec les histogrammes obtenus.
+En revanche, la correspondance entre droite théorique et histogramme est un peu décevante, particulièrement pour la Figure 3.74.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_1.png}
+  \caption{Nombre de trains annulés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_2.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2020-01}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_3_bis.png}
+  \caption{Recherche du moment de rupture optimal}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 1.90e-05}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(405.98, 438.87, 223.43, 718.55, 2.68)\\
+
+Nous constatons une augmentation de la moyenne après le moment de rupture. De même, la variance augmente après la rupture mais de manière plus impotante. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.79}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.80 et 3.81})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{HF_TA_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ positif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la gauche, avec une queue de distribution plus importante sur la droite.Cela parait cohérent avec les histogrammes obtenus. 
+
+En revanche, la correspondance entre droite théorique et histogramme est un peu décevante.
+
+\section{Auverge-Rhône-Alpes}
+
+
+\subsection{Trains programmés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TP_1.png}
+  \caption{Nombre de trains programmés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TP_2.png}
+  \caption{Histogramme du nombre de trains programmés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2021-09}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.8\textwidth]{image/ARA_TP_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value=  4.36-11}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(35702.70, 39669.58, 9849.48, 4294.28, -6.04)\\
+
+Nous constatons que la moyenne de la loi normale asymétrique après le point de rupture est  plus élevée que pour celle avant point de rupture.De plus, nous observons une baisse importante de la variance après point de rupture. Ces observations sont cohérentes avec ce que nous observons à la \textit{Figure 3.84}.\\
+
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.85 et 3.86})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TP_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TP_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ négatif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la droite, avec une queue de distribution plus importante sur la gauche. Cela parait cohérent avec les histogrammes obtenus.\\
+
+En revanche, la correspondance entre droite théorique et histogramme est un peu décevante.
+
+\subsection{Trains annulés}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_1.png}
+  \caption{Nombre de trains annulés entre 01/2018 et 02/2024}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_2.png}
+  \caption{Histogramme du nombre de trains annulés}
+\end{figure}
+
+Nous appliquons notre méthode de detection de point de rupture et nous obtenons les résultats suivants:
+
+\subsubsection{Moment de rupture $\hat{k}$}
+
+La date de rupture obtenue est: \textbf{2020-06}. 
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_3_bis.png}
+  \caption{Recherche du moment de rupture optimal}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_3.png}
+  \caption{Date de rupture}
+\end{figure}
+
+\subsubsection{Test de Kolmogorov-Smirnov}
+
+Nous appliquons le test de Kolmogorov-Smirnov aux deux échantillons. Nous obtenons \textbf{p-value= 7.61e-05}: nous rejetons $H_0$, ainsi le point de rupture est pertinent.
+
+\subsubsection{Évaluation des paramètres des lois}
+
+$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$=(180.63, 508.59, 490.83, 327.96, 4.58)\\
+
+Nous constatons que la moyenne de la loi normale asymétrique après le point de rupture augmente tandis que la variance baisse. Cela parait cohérent avec ce que nous observons à la \textit{Figure 3.90}.\\
+
+Ci-dessous, nous comparons les histogrammes des deux échantillons aux lois théoriques (\textit{cf Figures 3.91 et 3.92})
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_4.png}
+  \caption{Histogramme de l'échantillon avant point de rupture}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\textwidth]{image/ARA_TA_5.png}
+  \caption{Histogramme de l'échantillon après point de rupture}
+\end{figure}
+
+Nous avions obtenu un paramètre $\hat{\theta}^k$ positif, c'est à dire des lois normales asymétriques pour lesquelles la distribution est inclinée vers la gauche, avec une queue de distribution plus importante sur la droite. Cela parait cohérent avec les histogrammes obtenus. \\
+
+En outre, la correspondance entre droite théorique et histogramme est satisfaisante pour les deux échantillons.
+
+}

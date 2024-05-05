@@ -1,0 +1,105 @@
+\chapter{Méthode de detection du point de rupture}
+    %\addcontentsline{toc}{chapter}{}
+\markboth{CHAPITRE 2. Méthode de detection du point de rupture}{
+
+La détection de point de rupture est une tâche cruciale dans de nombreux domaines tels que l'économie, la météorologie et la surveillance de processus industriels. Identifier avec précision ces points peut révéler des éléments importants sur les événements sous-jacents ou les changements de régime.\\
+
+La méthode utilisée dans notre analyse repose sur la maximisation de la vraisemblance, une approche robuste qui consiste à ajuster les paramètres de modèles statistiques de manière à rendre la séquence de données observées aussi probable que possible sous ces modèles. Cette méthode est particulièrement efficace pour modéliser des séries avec des ruptures, car elle permet de comparer rigoureusement les hypothèses de continuité contre celles de changement à des instants spécifiques.
+
+\section{Estimation des paramètres pour un point de rupture donné}
+
+Soit k\in  $\llbracket 10, n-10 \rrbracket$ , un point de rupture supposé. On a alors:\\
+
+\[
+\begin{cases}
+$X_1, ..., X_k$ \sim \mathcal{SN}(\mu_1,\sigma_1,\theta)  \\
+$X_{k+1}, ..., X_n$ \sim \mathcal{SN}(\mu_2,\sigma_2,\theta)
+\end{cases}
+\]
+Sous hypothèse d'indépendance des observations, la vraisemblance s'écrit alors:\\
+
+L($\underline{x}$,\mu_1,\mu_2,\sigma_1,\sigma_2,\theta)= $\displaystyle{\prod_{i=1}^k f_{1}(x_i,\mu_1,\sigma_1,\theta)}$ * $\displaystyle{\prod_{i=k+1}^n f_{2}(x_i,\mu_2,\sigma_2,\theta)}$ \\
+où 
+
+\[
+\begin{cases}
+f_{1}(x_i,\mu_1,\sigma_1,\theta)= \frac{2\phi\left(\frac{x_i-\mu_1}{\sigma_1}\right)\Phi\left(\theta\left(\frac{x_i-\mu_1}{\sigma_1}\right)\right)}{\sigma_1}  \\
+f_{2}(x_i,\mu_2,\sigma_2,\theta)= \frac{2\phi\left(\frac{x_i-\mu_2}{\sigma_2}\right)\Phi\left(\theta\left(\frac{x_i-\mu_2}{\sigma_2}\right)\right)}{\sigma_2}
+\end{cases}
+\]
+
+soit: \\
+
+L($\underline{x}$,\mu_1,\mu_2,\sigma_1,\sigma_2,\theta)=\frac{2^n}{\sigma_1^k*\sigma_2^{(n-k)}}*$\displaystyle{\prod_{i=1}^k \phi(\frac{x_i-\mu_1}{\sigma_1})*\Phi(\theta(\frac{x_i-\mu_1}{\sigma_1})) }$*$\displaystyle{\prod_{i=k+1}^n \phi(\frac{x_i-\mu_2}{\sigma_2})*\Phi(\theta(\frac{x_i-\mu_2}{\sigma_2})) }$\\
+
+Pour simplifier les calculs, nous passons à la log vraisemblance et nous obtenons finalement:\\
+
+
+{\center 
+l($\underline{x}$,\mu_1,\mu_2,\sigma_1,\sigma_2,\theta)=\\
+$\frac{n}{2}$*log(2)-$\frac{n}{2}*$log(\pi)-k*log(\sigma_1)-(n-k)*log(\sigma_2)-\frac{1}{2*\sigma_1^2}*$\displaystyle{\sum_{i=1}^k (x_i-\mu_1)^2}$\\
++$\displaystyle{\sum_{i=1}^k log(\Phi(\theta(\frac{x_i-\mu_1}{\sigma_1})))}$
+-$\frac{1}{2*\sigma_2^2}$*$\displaystyle{\sum_{i=k+1}^n (x_i-\mu_2)^2}$+$\displaystyle{\sum_{i=k+1}^n log(\Phi(\theta(\frac{x_i-\mu_2}{\sigma_2})))}$
+}
+
+\vspace{1cm}
+
+\textit{Ou encore}
+
+{\center 
+l($\underline{x}$,\mu_1,\mu_2,\sigma_1,\sigma_2,\theta)=\\
+C^{te}-k*log(\sigma_1)-(n-k)*log(\sigma_2)-\frac{1}{2*\sigma_1^2}*$\displaystyle{\sum_{i=1}^k (x_i-\mu_1)^2}$+$\displaystyle{\sum_{i=1}^k log(\Phi(\theta(\frac{x_i-\mu_1}{\sigma_1})))}$\\
+-$\frac{1}{2*\sigma_2^2}$*$\displaystyle{\sum_{i=k+1}^n (x_i-\mu_2)^2}$+$\displaystyle{\sum_{i=k+1}^n log(\Phi(\theta(\frac{x_i-\mu_2}{\sigma_2})))}$
+}
+
+\vspace{1cm}
+
+On peut alors estimer les paramètres des deux lois normales asymétriques par maximisation de la log vraisemblance:\\
+
+ $\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$ \hspace{0.05cm}=\hspace{0.05cm}argmax_{\mu_1,\mu_2,\sigma_1,\sigma_2,\theta} \hspace{0.1cm}l($\underline{x}$,\mu_1,\mu_2,\sigma_1,\sigma_2,\theta)\\
+ 
+sous conditions $\sigma_1$, $\sigma_2$>0 \\
+
+Si nous calculons les dérivées partielles de la log vraisemblance , nous nous rendons compte qu'il n'existe pas de solution explicite. Nous utiliserons donc la fonction minimize du module scipy.optimize sur l'opposé de la log vraisemblance afin de pouvoir estimer les paramètres des lois. \\
+
+Le code de la fonction permettant d'estimer les paramètres des lois pour un point de rupture donné est fourni en \textbf{ANNEXE}
+
+\section{Détermination de $\hat{k}$, point de rupture optimal}
+
+À présent, nous voulons déterminer $\hat{k}$, le point de rupture optimal, parmi les points de rupture candidats k \in  $\llbracket 10, n-10 \rrbracket$\\
+
+Pour cela, pour chaque k candidat, nous estimons les paramètres des lois normales asymétriques en utilisant la méthode décrite dans la section précédente: nous obtenons alors $\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$ pour chaque k.\\
+Nous pouvons alors calculer la log vraisemblance en fonction de k en utilisant ces paramètres estimés:\\
+\Lambda(k)=l($\underline{x}$,$\hat{\mu_1}^k$,$\hat{\mu_2}^k$,$\hat{\sigma_1}^k$,$\hat{\sigma_2}^k$,$\hat{\theta}^k$)\\
+
+Une fois encore, nous cherchons à maximiser la vraisemblance et le point de rupture se trouve de la manière suivante:
+
+$\hat{k}$=\hspace{0.05cm}argmax_{k} \hspace{0.1cm}\Lambda(k)\\
+
+Le code de la fonction permettant de trouver le point de rupture optimal est donné en \textbf{ANNEXE}
+
+\section{Test de Kolmogorov-Smirnov}
+
+Ayant trouvé $\hat{k}$, nous nous interrogons sur la pertinence d'un tel point de rupture et donc sur la nécessité de séparer l'échantillon ($x_1, ..., x_{\hat{k}}$,$x_{\hat{k}+1},..., x_n$) en deux sous échantillons ($x_1, ..., x_{\hat{k}}$,) et ($x_{\hat{k}+1}, ..., x_n$). Pour cela nous cherchons à tester la similarité en loi des échantillons ($x_1, ..., x_{\hat{k}}$,) et ($x_{\hat{k}+1}, ..., x_n$). Nous utiliserons le test de \textbf{Kolmogorov-Smirnov}.\\
+
+Le test de Kolmogorov-Smirnov est un test d'hypothèse statistique permettant de tester la similarité en loi de deux échantillons. Autrement dit, il permet de tester si deux échantillons ont été générés ou non par la même loi.
+
+\[
+\begin{cases}
+H_0: Les\hspace{0.1cm}deux\hspace{0.1cm} échantillons\hspace{0.1cm} sont\hspace{0.1cm} générés\hspace{0.1cm} par\hspace{0.1cm} la\hspace{0.1cm} même\hspace{0.1cm} loi \\
+H_1: Les\hspace{0.1cm} deux\hspace{0.1cm} échantillons\hspace{0.1cm} sont\hspace{0.1cm} générés\hspace{0.1cm} par\hspace{0.1cm} deux\hspace{0.1cm} lois\hspace{0.1cm} différentes
+\end{cases}
+\]\\
+
+Nous utiliserons la p-value du test avec un seuil de confiance $\alpha$=0.05
+
+\begin{itemize}
+  \item \textbf{p-value<$\alpha$}: on rejette $H_0$. Il y a des preuves suffisantes pour affirmer que les deux échantillons ont été générés par deux lois différentes.
+  \item \textbf{p-value$\geq$ $\alpha$}: on ne rejette pas $H_0$. Il n'y a pas de preuves suffisantes pour affirmer que les deux échantillons ont été générés par deux lois différentes.
+\end{itemize}
+
+Bien sûr, le point de rupture est pertinent seulement dans le cas de $H_1$, c'est à dire dans le cas où les deux échantillons ont été générés par deux lois différentes. \textbf{Autrement dit, le point de rupture est pertinent dans le cas où p-value<$\alpha$=0.05}\\
+
+Pour effectuer nos test de Kolmogorov-Smirnov, mous utilisons la fonction kstest du module scipy.stats.
+
+
